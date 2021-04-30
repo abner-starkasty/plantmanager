@@ -1,14 +1,24 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet } from 'react-native'
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text
+} from 'react-native'
+import colors from '../styles/colors'
 
-export function UserIdentification() {
+export function PlantSelect() {
   return (
     <SafeAreaView style={styles.container}>
-
+      <Text>Selecionar Planta</Text>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 })
