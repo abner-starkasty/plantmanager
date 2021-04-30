@@ -63,8 +63,6 @@ export function PlantSelect() {
     const { data } = await api
       .get(`plants?_sort=name&_order=asc&_page=${page}&_limit=8`)
 
-    console.log(data)
-
     if (!data || data.length === 0) 
       return setLoadedAll(true)
 
@@ -128,6 +126,7 @@ export function PlantSelect() {
       <View>
         <FlatList 
           data={environments}
+          keyExtractor={item => String(item.key)}
           renderItem={({ item }) => (
             <EnvironmentButton
               text={item.title}
@@ -144,6 +143,7 @@ export function PlantSelect() {
       <View style={styles.plants}>
         <FlatList 
           data={filteredPlants}
+          keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <PlantCardPrimary data={item}/>
           )}
