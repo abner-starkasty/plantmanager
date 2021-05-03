@@ -4,14 +4,13 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   Platform,
   TouchableOpacity,
   Image
 } from 'react-native'
 import { SvgUri } from 'react-native-svg'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import DateTimerPicker, { Event } from '@react-native-community/datetimepicker'
 import { format, isBefore } from 'date-fns'
 import { PlantProps, savePlant } from '../libs/storage'
@@ -30,6 +29,7 @@ export function PlantSave() {
   const [selectedDateTime, setSelectedDateTime] = useState(new Date())
   const [showDatePicker, setShowDatePicker] = useState(Platform.OS === 'ios')
 
+  const navigation = useNavigation()
   const route = useRoute()
   const { plant } = route.params as Params
 
@@ -58,6 +58,15 @@ export function PlantSave() {
         ...plant,
         dateTimeNotification: selectedDateTime
       })
+
+      navigation.navigate('Confirmation', {
+        title: 'Tudo certo',
+        subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com bastante amor.',
+        buttonText: 'Muito Obrigado :D',
+        icon: 'hug',
+        nextScreen: 'MyPlants'
+      })
+
     } catch (error) {
       Alert.alert('Não foi possível salvar. 😢')
     }
