@@ -114,7 +114,7 @@ export function PlantSelect() {
           Em qual ambiente
         </Text>
         <Text style={styles.subtitle}>
-          você quer colocar sua planta
+          você quer colocar sua planta?
         </Text>
       </View>
 
