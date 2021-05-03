@@ -7,6 +7,7 @@ import {
   FlatList,
   ActivityIndicator
 } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 import { EnvironmentButton } from '../components/EnvironmentButton'
 import { Load } from '../components/Load'
@@ -22,7 +23,7 @@ interface EnvironmentProps {
   title: string,
 }
 
-interface PlantsProps {
+interface PlantProps {
   id: number
   name: string
   about: string
@@ -37,10 +38,12 @@ interface PlantsProps {
 
 export function PlantSelect() {
   const [environments, setEnvironments] = useState<EnvironmentProps[]>([])
-  const [plants, setPlants] = useState<PlantsProps[]>([])
-  const [filteredPlants, setFilteredPlants] = useState<PlantsProps[]>([])
+  const [plants, setPlants] = useState<PlantProps[]>([])
+  const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([])
   const [environmentSelected, setEnvironmentSelected] = useState('all')
   const [loading, setLoading] = useState(true)
+
+  const navigation = useNavigation()
 
   function handleEnvironmentSelected(environment: string) {
     setEnvironmentSelected(environment)
@@ -86,6 +89,10 @@ export function PlantSelect() {
     setLoadingMore(true)
     setPage(oldValue => oldValue + 1)
     fetchPlants()
+  }
+
+  function handlePlantSelect(plant: PlantProps) {
+    navigation.navigate('PlantSave', { plant })
   }
 
   useEffect(() => {
@@ -145,7 +152,10 @@ export function PlantSelect() {
           data={filteredPlants}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
-            <PlantCardPrimary data={item}/>
+            <PlantCardPrimary 
+              data={item}
+              onPress={() => handlePlantSelect(item)}
+            />
           )}
           showsVerticalScrollIndicator={false}
           numColumns={2}
